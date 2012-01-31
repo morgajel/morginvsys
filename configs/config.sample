@@ -1,0 +1,153 @@
+[GENERAL]
+debug   = 0
+domain = example.com
+
+[Threading]
+load    = 1
+min     = 8
+max     = 32
+
+[Wiki]
+url     = http://wiki.example.com:8090/rpc/xmlrpc
+user    = automatedupdates
+pass    = secret
+space   = DEVOPS
+
+[Vsphere]
+user    = CORP\vsphereautomation
+pass    = secret2
+consoles= vsphere1.example.com
+consoles= vsphere2.example.com
+
+[Nagios]
+configpath      = /etc/nagios/
+
+[Applications]
+app_name        = big
+app_name        = cap
+app_name        = content
+app_name        = foresee
+app_name        = gdc
+app_name        = jcs
+app_name        = jms
+app_name        = reader
+app_name        = tinyurl
+
+[LDAP]
+host            = ldap.example.com
+base            = ou=Computer,dc=example,dc=com
+networkBase     = ou=Network,dc=example,dc=com
+
+[LDAP Filters]
+centos              = (OS=*CentOS*)
+hosts               = (objectClass=extDevice)
+active hosts        = (&(objectClass=extDevice)(ou:dn:=Active))
+inactive hosts      = (&(objectClass=extDevice)(!(ou:dn:=Active)))
+active linux        = (&(OS=*Linux*)(ou:dn:=active))
+scannable network   = (&(objectclass=ipnetwork)(!(description=*NOTMANAGED*))(!(description=*STORAGE*))(!(description=*FRONTEND*))(!(description=*RAC*)))
+management networks = (&(objectclass=ipNetwork)(description=*Management*))
+non-rac networks    = (&(objectclass=ipnetwork)(!(description=*RAC*)))
+
+[Network]
+ssh_option       = -o ConnectTimeout=10
+ssh_option       = -o BatchMode=yes
+ssh_option       = -o PasswordAuthentication=no
+ssh_option       = -o PreferredAuthentications=publickey
+snmp_strings    = secretsnmp
+snmp_strings    = public
+domain          = example.com
+domain          = example.net
+domain          = test.org
+
+[Subnet]
+datacenter  = in
+in_name     = Independence
+in_subnet   = 10.11.284.64/28
+in_subnet   = 10.11.249.192/26
+in_subnet   = 10.11.222.0/23
+
+datacenter  = fh
+fh_name     = Farmington Hills
+fh_subnet   = 10.12.13.57/32
+
+datacenter  = mn
+mn_name     = Mason
+mn_subnet   = 10.13.134.0/23
+mn_subnet   = 10.13.136.0/24
+mn_subnet   = 10.13.139.0/24
+
+
+[Firmware]
+based on    = Smart Update Firmware 9.30
+date        = 2011.05
+OA          = 3.31
+
+iLO 1       = 1.94
+iLO 2       = 2.07
+iLO 3       = 1.26
+
+PowerPIC  = 3.4
+
+BL460c G1 BIOS  = 2011.05.02
+BL465c G1 BIOS  = 2011.05.02
+BL465c G5 BIOS  = 2011.05.02
+BL465c G6 BIOS  = 2011.05.02
+BL465c G7 BIOS  = 2011.10.02
+BL685c G1 BIOS  = 2011.05.02
+BL685c G5 BIOS  = 2011.05.02
+BL20p G2 BIOS = 2004.09.16
+BL20p G3 BIOS = 2007.07.16
+BL25p G1 BIOS = 2007.02.14
+BL45p G1 BIOS = 2007.02.14
+DL145 G1 BIOS = 4.08
+DL360 G3 BIOS = 4.12 
+DL360 G6 BIOS = 2010.01.13 
+DL380 G1 BIOS = 4.11 
+DL380 G2 BIOS = 4.05 
+DL380 G3 BIOS = 4.09 
+DL380 G4 BIOS = 2007.07.19 
+DL380 G5 BIOS = 2009.07.10 
+DL380 G6 BIOS = 2011.05.05 
+DL380 G7 BIOS = 2011.05.05
+DL385 G5p BIOS = 2009.04.01 
+DL580 G4 BIOS = 2008.06.10  
+DL585 G5 BIOS = 2009.03.11 
+
+Smart Array 5300    = 3.62
+Smart Array E200i   = 1.86
+Smart Array P400    = 7.22
+Smart Array P410i   = 5.14
+Smart Array 580     = 1.66
+Smart Array 5i      = 2.76
+Smart Array 6i      = 2.84
+
+bcm5700         = 5704-v3.27b
+be2net          = 2.102.517.703
+bnx2            = 5.2.3
+bnx2 bc         = 4.4.1
+e1000           = 5.12-6
+e1000e          = 5.12-6
+e1000_rtm       = 5.11-2
+e100            = unknown
+tg3             = 5715s-v3.28
+
+[linux kernels]
+2.4.9           = Red Hat Release 2.1
+2.4.21          = Red Hat Release 3
+2.6.5           = SUSE Linux Enterprise Server 9
+2.6.9           = Red Hat Release 4
+2.6.15          = Ubuntu 6.06.1 LTS
+2.6.16          = SUSE Linux Enterprise Server 10
+2.6.17          = Ubuntu 6.10
+2.6.18          = Red Hat / CentOS Release 5
+
+[solaris kernels]
+5.8             = Solaris 8
+5.9             = Solaris 9
+5.10            = Solaris 10
+
+[windows kernels]
+5.0             = Windows 2000
+5.1             = Windows XP
+5.2             = Windows 2003
+

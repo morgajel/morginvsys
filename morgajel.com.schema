@@ -1,0 +1,199 @@
+##
+## schema file designed on OpenLDAP 2.3.x
+## Schema for storing computer information in LDAP
+## OIDs are owned by morgajel.com.
+## Serial 2012012701
+##
+## 1.3.6.1.4.1.38631.2.x   - LDAP                  
+## 1.3.6.1.4.1.38631.2.1.x - attributetypes
+## 1.3.6.1.4.1.38631.2.2.x - objectclasses
+##
+## Author: Jesse Morgan <morgajel@gmail.com>
+
+# This schema is intended as an extension for existing classes, mainly the device and ipHost objectclasses.
+#
+# objectclass ( 2.5.6.14 NAME 'device' SUP top STRUCTURAL
+# 	MUST cn
+# 	MAY ( serialNumber $ seeAlso $ owner $ ou $ o $ l $ description ) )
+
+# objectclass ( 1.3.6.1.1.1.2.6 NAME 'ipHost'
+#   DESC 'Abstraction of a host, an IP device'
+#   SUP top AUXILIARY
+#   MUST ( cn $ ipHostNumber )
+#   MAY ( l $ description $ manager ) )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.101 NAME ( 'tag' 'extDeviceTag' )
+        DESC 'A small, dynamically generated token representing information about this host. i.e. userCrontabs, tomcatRunning, etc.'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.102 NAME ( 'lastAutoUpdated' 'extDeviceLastAutoUpdated' )
+        DESC 'Date stamp containing the last update. Used by automated updates. i.e. 20020101214122Z'
+        ORDERING generalizedTimeOrderingMatch
+        EQUALITY generalizedTimeMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.24
+        SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.103 NAME ( 'CPU' 'extDeviceCPU' )
+        DESC 'CPU information including Sockets-by-Core, e.g. 2x4 Intel Xeon CPU 3.80GHz'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.104 NAME ( 'memorySize' 'extDeviceMemorySize')
+        DESC 'Amount of memory and unit i.e. 4 GB, 3200 MB'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.105 NAME ( 'disk' 'extDeviceDisk' )
+        DESC 'One entry per disk in the format of "name size unit fstype disktype" e.g. "/mnt/windows 300 GB NTFS SAN","/ 4 GB ext3 LOCAL" '
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.106 NAME ( 'receivedDate' 'extDeviceReceivedDate' )
+        DESC 'Date stamp containing when hardware was purchased or received. e.g. 20020101214122Z'
+        ORDERING generalizedTimeOrderingMatch
+        EQUALITY generalizedTimeMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.24
+        SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.107 NAME ( 'rackLocation' 'extDeviceRackLocation' )
+        DESC 'Physical Location of host in DataCenter, one per line: "Rack 4","Enclosure 3", "Bay 5","Unit 6"'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.108 NAME ( 'makeName' 'extDeviceMakeName' )
+        DESC 'Manufacturer name e.g. F5, Cisco, HP, IBM, Dell'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 
+        SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.109 NAME ( 'modelNumber' 'extDeviceModelNumber' )
+        DESC 'Model Number of Hardware, e.g. BLC465 G1, BigIP 3000, BLC3820'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 
+        SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.110 NAME ( 'firmwareVersion' 'extDeviceFirmwareVersion' )
+        DESC 'firmware Version associated with this host, one line per entry e.g. "ILO-2 1.33","NIC bnx2 1.9.6","BIOS 2009.12.08"'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.111 NAME ( 'parentDeviceDN' 'extDeviceParentDeviceDN' )
+        DESC 'DN of parent device for mapping out dependencies, one line per entry. e.g. switches, chassis, gateways'
+        EQUALITY distinguishedNameMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.12 )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.112 NAME ( 'parentDevice' 'extDeviceParentDevice' )
+        DESC 'Name parent device for mapping out dependencies, one line per entry; alternative for ParentDeviceDN'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.113 NAME ( 'vmHostDN' 'extDeviceVmHostDN' )
+        DESC 'DN of Host Machine if device is a virtual guest.'
+        EQUALITY distinguishedNameMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.12 )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.114 NAME ( 'vmHost' 'extDeviceVmHost' )
+        DESC 'Name of Host Machine if device is a virtual guest; alternative to vmHostDN.'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.115 NAME ( 'OS' 'extDeviceOS' )
+        DESC 'Operating System token, one per line. e.g. "Linux","Redhat Linux 6.0","Windows 2000","OpenVMS"'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.116 NAME ( 'SDK' 'extDeviceSDK' )
+        DESC 'Software Development/Runtime Kits for middleware. e.g. "/usr/java/jdk1.6.0_21",".NET 3.5"'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.117 NAME ( 'softwareName' 'extDeviceSoftwareName' )
+        DESC 'Custom or otherwise important application on this host. e.g. "Oracle 10G","CustomApp","Nuxeo","Confluence"'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.118 NAME ( 'softwareKey' 'extDeviceSoftwareKey' )
+        DESC 'Activation Key needed for software on a host. e.g. "Nuxeo 1X2DS4G5Y32","Confluence #ACC3A7DDF3"'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.119 NAME ( 'defaultGateway' 'extDeviceDefaultGateway' )
+        DESC 'default Network gateway IP address for this host, useful for mapping network topologies.'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.120 NAME ( 'mgtIPHostNumber' 'extDeviceMgtIPHostNumber' )
+        DESC 'Management interface for device DRAC, ILO or RIB addresses (usually different than the primaryIPHostNumber).'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.38631.2.1.121 NAME ( 'primaryIPHostNumber' 'extDevicePrimaryIPHostNumber' )
+        DESC 'Primary ip address of a server.'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE )
+attributetype ( 1.3.6.1.4.1.38631.2.1.122 NAME ( 'vendor' 'extDeviceVendor' )
+        DESC 'Name of supporting Vendor'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+attributetype ( 1.3.6.1.4.1.38631.2.1.123 NAME ( 'vendorContact' 'extDeviceVendorContact' )
+        DESC 'Various forms of contact, one per line: e.g. "Phone (555) 555-1212","URL http://support.foo.com","AcctManager Bob D."'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+attributetype ( 1.3.6.1.4.1.38631.2.1.124 NAME ( 'vendorSupportTerms' 'extDeviceVendorSupportTerms' )
+        DESC 'Type of support provided e.g. gold, silver, premium, self-support, 24x7 phone support'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+
+# These are inherited ipHost and used in Device:
+#    l $ description $ iphostnumber $ owner $ seeAlso $ serialNumber $
+# These are custom for extDevice:
+objectclass ( 1.3.6.1.4.1.38631.2.2.101 NAME 'extDevice'
+        DESC 'An extended network device; this should be used as an overlay for a device object'
+        SUP IpHost AUXILIARY 
+        MUST ( cn $ ipHostNumber )
+        MAY ( CPU $ defaultGateway $ disk $ firmwareVersion $
+            ipHostNumber $ lastAutoUpdated $ makeName $ memorySize $
+            mgtIPHostNumber $ modelNumber $ OS $ parentDeviceDN $ 
+            parentDevice $ primaryIPHostNumber $ rackLocation $ 
+            receivedDate $ SDK $ softwareKey $ softwareName $ tag $
+            vendor $ vmHostDN $ vmHost $ vendorContact $ 
+            vendorSupportTerms
+            )
+        )
+
+objectclass ( 1.3.6.1.4.1.38631.2.2.102 NAME 'applicationStack'
+        DESC 'A representation of an application, group of applications, or service'
+        STRUCTURAL
+        MUST cn
+        MAY ( description 
+                
+            )
+        )
+

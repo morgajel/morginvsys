@@ -1,0 +1,9 @@
+
+- $starttime should be a readonly, constant  or global; no reason to pass it around since it's set once and forget it;
+- Need to figure out how to load a pm from the level below; probably some INC trickery in each script, maybe findbin.
+- All scripts need working --help
+- all scripts need write-to-wiki flag if they write to wiki
+- all scripts need getopts
+- all jobs requiring sudoers should explain why
+- a method to figure out given an IP, which range in LDAP?
+- if using git, behave properly.
