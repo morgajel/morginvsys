@@ -1,0 +1,27 @@
+# New ou to be loaded when the old one is replaced.
+dn: ou=New,ou=Computer,dc=example,dc=com
+ou: New
+objectClass: top
+objectClass: organizationalUnit
+description: This is a holding unit for new inventory entries.
+
+# ou=ILO to be loaded when the old one is replaced.
+dn: ou=ILO,ou=Mason,ou=Computer,dc=example,dc=com
+ou: ILO
+objectClass: top
+objectClass: organizationalUnit
+description: ILO Interfaces in Mason
+
+# ou=ILO to be loaded when the old one is replaced.
+dn: ou=ILO,ou=Farmington Hills,ou=Computer,dc=example,dc=com
+ou: ILO
+objectClass: top
+objectClass: organizationalUnit
+description: ILO Interfaces in Farmington Hills
+
+# ou=ILO to be loaded when the old one is replaced.
+dn: ou=ILO,ou=Independence,ou=Computer,dc=example,dc=com
+ou: ILO
+objectClass: top
+objectClass: organizationalUnit
+description: ILO Interfaces in Independence
