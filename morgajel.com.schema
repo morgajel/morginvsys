@@ -196,7 +196,7 @@ attributetype ( 1.3.6.1.4.1.38631.2.1.128 NAME ( 'alias' 'extAlias' )
 # These are inherited ipHost and used in Device:
 #    l $ description $ iphostnumber $ owner $ seeAlso $ serialNumber $
 # These are custom for extDevice:
-objectclass ( 1.3.6.1.4.1.38631.2.2.101 NAME 'extDevice'
+objectclass ( 1.3.6.1.4.1.38631.2.2.101 NAME ( 'extDevice' )
         DESC 'An extended network device; this should be used as an overlay for a device object'
         SUP IpHost AUXILIARY 
         MUST ( cn $ ipHostNumber )
@@ -214,7 +214,7 @@ objectclass ( 1.3.6.1.4.1.38631.2.2.102 NAME 'applicationStack'
         DESC 'A representation of an application, group of applications, or service'
         STRUCTURAL
         MUST cn
-        MAY ( alias $ description $ applicationContact $ deployedApplication $ applicationpath 
+        MAY ( description $ applicationContact $ deployedApplication $ applicationpath 
             )
         )
 

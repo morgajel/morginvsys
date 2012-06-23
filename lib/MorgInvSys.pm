@@ -1,10 +1,18 @@
 package MorgInvSys;
 
+########################################
+##
+## This module was created for use with morginvsys.
+## The latest version can be found at 
+## https://github.com/morgajel/morginvsys
+##
+########################################
 use strict;
 use Exporter;
 use Config::IniFiles;
 use Confluence;
 use Carp;
+use IPC::Open3;
 use Net::LDAP;
 use Time::Duration;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
